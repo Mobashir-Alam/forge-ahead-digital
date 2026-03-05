@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { SectionHeading, AnimatedCard } from "@/components/SectionHeading";
+import { useContactModal } from "@/components/ContactFormModal";
 import {
   Globe, Paintbrush, Rocket, ShoppingCart, Code2, Zap,
   Search, Plug, Bot, Wrench, CheckCircle2, ArrowRight,
-  Star, Quote, Monitor, Smartphone, MessageSquare, Shield
+  Star, Quote, Smartphone, MessageSquare
 } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import { Link } from "react-router-dom";
 import portfolioRestaurant from "@/assets/portfolio-restaurant.jpg";
 import portfolioSaas from "@/assets/portfolio-saas.jpg";
 import portfolioRealestate from "@/assets/portfolio-realestate.jpg";
@@ -55,16 +55,18 @@ const testimonials = [
 ];
 
 export default function Index() {
+  const { setOpen } = useContactModal();
+
   return (
     <div>
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroBg} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-navy/80" />
+      {/* Hero - Light blue animated background */}
+      <section className="relative min-h-screen flex items-center overflow-hidden hero-light-bg">
+        {/* Animated gradient blobs */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="hero-blob hero-blob-1" />
+          <div className="hero-blob hero-blob-2" />
+          <div className="hero-blob hero-blob-3" />
         </div>
-        <div className="hero-glow top-1/4 -left-32" />
-        <div className="hero-glow bottom-1/4 -right-32" />
         <div className="container-tight relative z-10 pt-24">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -72,18 +74,18 @@ export default function Index() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-navy-foreground">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-foreground">
               High-Performance Websites & Digital Solutions for{" "}
               <span className="gradient-text">Modern Businesses</span>
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-charcoal-foreground max-w-xl leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
               We design and build fast, scalable, and conversion-focused websites that help businesses grow online.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button variant="hero" size="xl" asChild>
-                <Link to="/contact">Book a Free Consultation</Link>
+              <Button variant="hero" size="xl" onClick={() => setOpen(true)}>
+                Book a Free Consultation
               </Button>
-              <Button variant="hero-outline" size="xl" asChild className="border-navy-foreground/30 text-navy-foreground hover:bg-navy-foreground/10">
+              <Button variant="hero-outline" size="xl" asChild>
                 <Link to="/portfolio">View Our Work</Link>
               </Button>
             </div>
@@ -125,6 +127,12 @@ export default function Index() {
               </AnimatedCard>
             ))}
           </div>
+          {/* CTA after services */}
+          <div className="text-center mt-12">
+            <Button variant="hero" size="lg" onClick={() => setOpen(true)}>
+              Book a Call <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -153,9 +161,12 @@ export default function Index() {
               </AnimatedCard>
             ))}
           </div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 flex flex-wrap justify-center gap-4">
             <Button variant="hero-outline" size="lg" asChild>
               <Link to="/portfolio">View All Projects <ArrowRight className="ml-2 w-4 h-4" /></Link>
+            </Button>
+            <Button variant="hero" size="lg" onClick={() => setOpen(true)}>
+              Book a Call
             </Button>
           </div>
         </div>
@@ -242,8 +253,8 @@ export default function Index() {
             <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto mb-8">
               Book a free consultation and let's discuss your project.
             </p>
-            <Button size="xl" className="bg-background text-foreground hover:bg-background/90 font-bold" asChild>
-              <Link to="/contact">Schedule a Free Consultation</Link>
+            <Button size="xl" className="bg-background text-foreground hover:bg-background/90 font-bold" onClick={() => setOpen(true)}>
+              Schedule a Free Consultation
             </Button>
           </motion.div>
         </div>
