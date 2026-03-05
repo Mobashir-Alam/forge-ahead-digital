@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useContactModal } from "./ContactFormModal";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { setOpen: openModal } = useContactModal();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
@@ -24,7 +26,6 @@ export default function Navbar() {
           Launch<span className="gradient-text">Forge</span>
         </Link>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
@@ -39,18 +40,16 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Button variant="hero" size="lg" asChild>
-            <Link to="/contact">Book a Call</Link>
+          <Button variant="hero" size="lg" onClick={() => openModal(true)}>
+            Book a Call
           </Button>
         </div>
 
-        {/* Mobile toggle */}
         <button className="md:hidden p-2 text-foreground" onClick={() => setOpen(!open)}>
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -72,8 +71,8 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Button variant="hero" size="lg" asChild className="mt-2">
-                <Link to="/contact" onClick={() => setOpen(false)}>Book a Call</Link>
+              <Button variant="hero" size="lg" className="mt-2" onClick={() => { setOpen(false); openModal(true); }}>
+                Book a Call
               </Button>
             </div>
           </motion.div>
