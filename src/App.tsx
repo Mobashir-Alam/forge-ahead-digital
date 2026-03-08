@@ -104,6 +104,19 @@ const App = () => (
               <Route path="/profile" element={<Profile />} />
             </Route>
 
+            {/* Admin pages */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route element={<AdminLayout />}>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/clients" element={<AdminClients />} />
+              <Route path="/admin/projects" element={<AdminProjects />} />
+              <Route path="/admin/meetings" element={<AdminMeetings />} />
+              <Route path="/admin/payments" element={<AdminPayments />} />
+              <Route path="/admin/messages" element={<AdminMessages />} />
+              <Route path="/admin/files" element={<AdminFiles />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
+            </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ContactModalProvider>
