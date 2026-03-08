@@ -25,6 +25,16 @@ import Payments from "./pages/portal/Payments";
 import Messages from "./pages/portal/Messages";
 import Files from "./pages/portal/Files";
 import Profile from "./pages/portal/Profile";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminLogin from "./pages/admin/Login";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminClients from "./pages/admin/Clients";
+import AdminProjects from "./pages/admin/Projects";
+import AdminMeetings from "./pages/admin/Meetings";
+import AdminPayments from "./pages/admin/Payments";
+import AdminMessages from "./pages/admin/Messages";
+import AdminFiles from "./pages/admin/Files";
+import AdminSettings from "./pages/admin/Settings";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
