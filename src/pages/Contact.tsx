@@ -64,16 +64,16 @@ export default function Contact() {
                         <Input placeholder="Your Company" className="h-12" />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-foreground mb-1.5 block">Budget</label>
-                        <Select>
+                        <label className="text-sm font-medium text-foreground mb-1.5 block">Service Type *</label>
+                        <Select required>
                           <SelectTrigger className="h-12">
-                            <SelectValue placeholder="Select budget" />
+                            <SelectValue placeholder="Select service" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="5k">$5,000 - $10,000</SelectItem>
-                            <SelectItem value="10k">$10,000 - $25,000</SelectItem>
-                            <SelectItem value="25k">$25,000 - $50,000</SelectItem>
-                            <SelectItem value="50k">$50,000+</SelectItem>
+                            <SelectItem value="website">Website</SelectItem>
+                            <SelectItem value="app">App</SelectItem>
+                            <SelectItem value="ecommerce">E-commerce</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
