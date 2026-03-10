@@ -37,6 +37,8 @@ import AdminFiles from "./pages/admin/Files";
 import AdminSettings from "./pages/admin/Settings";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { account } from "./lib/appwrite";
+
 
 const queryClient = new QueryClient();
 
@@ -46,8 +48,25 @@ function ScrollToTop() {
   return null;
 }
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+
+
+const App = () => {
+  useEffect(() => {
+  const test = async () => {
+    try {
+      const user = await account.get();
+      console.log("User:", user);
+    } catch (err) {
+      console.log("No session");
+    }
+  };
+
+  test();
+}, []);
+
+  
+  return (
+    <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -123,6 +142,7 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+}
 
 export default App;
