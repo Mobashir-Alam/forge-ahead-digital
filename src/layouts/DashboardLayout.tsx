@@ -5,21 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
-  LayoutDashboard,
-  FolderKanban,
-  CalendarClock,
-  CreditCard,
-  MessageSquare,
-  FileText,
-  User,
-  LifeBuoy,
-  LogOut,
-  Bell,
-  Menu,
-  X,
-  ChevronLeft,
+  LayoutDashboard, FolderKanban, CalendarClock, CreditCard,
+  MessageSquare, FileText, User, LifeBuoy, LogOut, Bell, Menu, X, ChevronLeft,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const sidebarLinks = [
   { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
@@ -37,8 +27,17 @@ export default function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { profile, user, signOut } = useAuth();
+
+  const displayName = profile?.full_name || user?.email || "User";
+  const initials = displayName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + "/");
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login");
+  };
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
@@ -47,7 +46,6 @@ export default function DashboardLayout() {
           {collapsed ? <span className="gradient-text">L</span> : <>Launch<span className="gradient-text">Forge</span></>}
         </Link>
       </div>
-
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
         {sidebarLinks.map((link) => (
           <Link
@@ -56,9 +54,7 @@ export default function DashboardLayout() {
             onClick={() => setMobileOpen(false)}
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-              isActive(link.path)
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+              isActive(link.path) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground",
               collapsed && "justify-center px-2"
             )}
           >
@@ -67,10 +63,9 @@ export default function DashboardLayout() {
           </Link>
         ))}
       </nav>
-
       <div className="p-3 border-t border-border/50">
         <button
-          onClick={() => navigate("/login")}
+          onClick={handleLogout}
           className={cn(
             "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors w-full",
             collapsed && "justify-center px-2"
@@ -85,59 +80,32 @@ export default function DashboardLayout() {
 
   return (
     <div className="flex h-screen bg-surface overflow-hidden">
-      {/* Desktop sidebar */}
-      <aside
-        className={cn(
-          "hidden lg:flex flex-col bg-background border-r border-border/50 transition-all duration-300 shrink-0",
-          collapsed ? "w-[68px]" : "w-60"
-        )}
-      >
+      <aside className={cn("hidden lg:flex flex-col bg-background border-r border-border/50 transition-all duration-300 shrink-0", collapsed ? "w-[68px]" : "w-60")}>
         <SidebarContent />
       </aside>
-
-      {/* Mobile sidebar overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-              onClick={() => setMobileOpen(false)}
-            />
-            <motion.aside
-              initial={{ x: -260 }}
-              animate={{ x: 0 }}
-              exit={{ x: -260 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 w-60 bg-background border-r border-border/50 z-50 lg:hidden"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
+            <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: "spring", damping: 25, stiffness: 300 }} className="fixed top-0 left-0 bottom-0 w-60 bg-background border-r border-border/50 z-50 lg:hidden">
               <SidebarContent />
             </motion.aside>
           </>
         )}
       </AnimatePresence>
-
-      {/* Main area */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top navbar */}
         <header className="h-16 bg-background/80 backdrop-blur-xl border-b border-border/50 flex items-center justify-between px-4 lg:px-6 shrink-0 z-30">
           <div className="flex items-center gap-3">
             <button className="lg:hidden p-2 text-muted-foreground hover:text-foreground" onClick={() => setMobileOpen(true)}>
               <Menu className="h-5 w-5" />
             </button>
-            <button
-              className="hidden lg:flex p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
-              onClick={() => setCollapsed(!collapsed)}
-            >
+            <button className="hidden lg:flex p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors" onClick={() => setCollapsed(!collapsed)}>
               <ChevronLeft className={cn("h-5 w-5 transition-transform", collapsed && "rotate-180")} />
             </button>
             <h1 className="text-lg font-display font-semibold text-foreground hidden sm:block">
               {sidebarLinks.find((l) => isActive(l.path))?.label || "Portal"}
             </h1>
           </div>
-
           <div className="flex items-center gap-3">
             <button className="relative p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors">
               <Bell className="h-5 w-5" />
@@ -145,14 +113,12 @@ export default function DashboardLayout() {
             </button>
             <div className="flex items-center gap-2.5">
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">JD</AvatarFallback>
+                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">{initials}</AvatarFallback>
               </Avatar>
-              <span className="text-sm font-medium text-foreground hidden sm:block">John Doe</span>
+              <span className="text-sm font-medium text-foreground hidden sm:block">{displayName}</span>
             </div>
           </div>
         </header>
-
-        {/* Page content */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <Outlet />
         </main>

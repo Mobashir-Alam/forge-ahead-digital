@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
 import { ContactModalProvider } from "@/components/ContactFormModal";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute, AdminRoute } from "@/components/ProtectedRoute";
 import DashboardLayout from "@/layouts/DashboardLayout";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
@@ -52,74 +54,76 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ContactModalProvider>
-          <ScrollToTop />
-          <Routes>
-            {/* Marketing pages with navbar/footer */}
-            <Route
-              path="/"
-              element={
-                <>
-                  <Navbar />
-                  <main><Index /></main>
-                  <Footer />
-                  <FloatingButtons />
-                </>
-              }
-            />
-            {[
-              { path: "/services", element: <Services /> },
-              { path: "/portfolio", element: <Portfolio /> },
-              { path: "/process", element: <Process /> },
-              { path: "/about", element: <About /> },
-              { path: "/contact", element: <Contact /> },
-            ].map(({ path, element }) => (
+        <AuthProvider>
+          <ContactModalProvider>
+            <ScrollToTop />
+            <Routes>
+              {/* Marketing pages with navbar/footer */}
               <Route
-                key={path}
-                path={path}
+                path="/"
                 element={
                   <>
                     <Navbar />
-                    <main>{element}</main>
+                    <main><Index /></main>
                     <Footer />
                     <FloatingButtons />
                   </>
                 }
               />
-            ))}
+              {[
+                { path: "/services", element: <Services /> },
+                { path: "/portfolio", element: <Portfolio /> },
+                { path: "/process", element: <Process /> },
+                { path: "/about", element: <About /> },
+                { path: "/contact", element: <Contact /> },
+              ].map(({ path, element }) => (
+                <Route
+                  key={path}
+                  path={path}
+                  element={
+                    <>
+                      <Navbar />
+                      <main>{element}</main>
+                      <Footer />
+                      <FloatingButtons />
+                    </>
+                  }
+                />
+              ))}
 
-            {/* Auth pages (no navbar/footer) */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+              {/* Auth pages (no navbar/footer) */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
 
-            {/* Dashboard pages */}
-            <Route element={<DashboardLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/project-details" element={<ProjectDetails />} />
-              <Route path="/meetings" element={<Meetings />} />
-              <Route path="/payments" element={<Payments />} />
-              <Route path="/messages" element={<Messages />} />
-              <Route path="/files" element={<Files />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+              {/* Protected Dashboard pages */}
+              <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/project-details" element={<ProjectDetails />} />
+                <Route path="/meetings" element={<Meetings />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/messages" element={<Messages />} />
+                <Route path="/files" element={<Files />} />
+                <Route path="/profile" element={<Profile />} />
+              </Route>
 
-            {/* Admin pages */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route element={<AdminLayout />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-              <Route path="/admin/clients" element={<AdminClients />} />
-              <Route path="/admin/projects" element={<AdminProjects />} />
-              <Route path="/admin/meetings" element={<AdminMeetings />} />
-              <Route path="/admin/payments" element={<AdminPayments />} />
-              <Route path="/admin/messages" element={<AdminMessages />} />
-              <Route path="/admin/files" element={<AdminFiles />} />
-              <Route path="/admin/settings" element={<AdminSettings />} />
-            </Route>
+              {/* Admin pages */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/clients" element={<AdminClients />} />
+                <Route path="/admin/projects" element={<AdminProjects />} />
+                <Route path="/admin/meetings" element={<AdminMeetings />} />
+                <Route path="/admin/payments" element={<AdminPayments />} />
+                <Route path="/admin/messages" element={<AdminMessages />} />
+                <Route path="/admin/files" element={<AdminFiles />} />
+                <Route path="/admin/settings" element={<AdminSettings />} />
+              </Route>
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </ContactModalProvider>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ContactModalProvider>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
