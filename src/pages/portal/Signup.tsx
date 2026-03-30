@@ -1,16 +1,48 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirm) {
+      toast({ title: "Error", description: "Passwords do not match", variant: "destructive" });
+      return;
+    }
+    if (password.length < 6) {
+      toast({ title: "Error", description: "Password must be at least 6 characters", variant: "destructive" });
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: name },
+        emailRedirectTo: window.location.origin,
+      },
+    });
+    setLoading(false);
+    if (error) {
+      toast({ title: "Signup failed", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Account created!", description: "Check your email to confirm your account, or sign in if auto-confirm is enabled." });
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface p-4">
@@ -28,7 +60,7 @@ export default function Signup() {
             <CardDescription>Get started with your client portal</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <form onSubmit={handleSignup} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -45,9 +77,9 @@ export default function Signup() {
                 <Label htmlFor="confirm">Confirm Password</Label>
                 <Input id="confirm" type="password" placeholder="••••••••" value={confirm} onChange={(e) => setConfirm(e.target.value)} required />
               </div>
-              <Link to="/dashboard">
-                <Button variant="hero" size="lg" className="w-full mt-2">Create Account</Button>
-              </Link>
+              <Button variant="hero" size="lg" className="w-full mt-2" type="submit" disabled={loading}>
+                {loading ? "Creating account..." : "Create Account"}
+              </Button>
               <p className="text-center text-sm text-muted-foreground">
                 Already have an account? <Link to="/login" className="text-primary font-medium hover:underline">Sign in</Link>
               </p>

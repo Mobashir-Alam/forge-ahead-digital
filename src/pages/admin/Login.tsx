@@ -1,15 +1,48 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { ShieldCheck } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      setLoading(false);
+      toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      return;
+    }
+
+    // Check if user has admin role
+    const { data: roles } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", data.user.id);
+
+    const hasAdmin = roles?.some((r) => r.role === "admin");
+    setLoading(false);
+
+    if (!hasAdmin) {
+      await supabase.auth.signOut();
+      toast({ title: "Access denied", description: "You do not have admin privileges.", variant: "destructive" });
+      return;
+    }
+
+    navigate("/admin/dashboard");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-surface p-4">
@@ -30,7 +63,7 @@ export default function AdminLogin() {
             <CardDescription>Sign in to the admin dashboard</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="admin@launchforge.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -39,9 +72,9 @@ export default function AdminLogin() {
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </div>
-              <Link to="/admin/dashboard">
-                <Button variant="hero" size="lg" className="w-full mt-2">Sign In</Button>
-              </Link>
+              <Button variant="hero" size="lg" className="w-full mt-2" type="submit" disabled={loading}>
+                {loading ? "Signing in..." : "Sign In"}
+              </Button>
             </form>
           </CardContent>
         </Card>
