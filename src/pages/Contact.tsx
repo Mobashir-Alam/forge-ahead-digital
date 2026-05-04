@@ -94,7 +94,7 @@ export default function Contact() {
                 <div className="p-8 rounded-xl border border-border bg-card">
                   <Mail className="w-8 h-8 text-primary mb-4" />
                   <h3 className="font-display font-bold text-lg text-card-foreground mb-2">Email Us</h3>
-                  <p className="text-muted-foreground text-sm">hello@launchforge.digital</p>
+                  <p className="text-muted-foreground text-sm">hello@codeshef.com</p>
                 </div>
               </AnimatedCard>
               <AnimatedCard delay={0.2}>

@@ -25,7 +25,7 @@ export default function About() {
               Building the <span className="gradient-text">Future of Web</span>
             </h1>
             <p className="text-lg text-charcoal-foreground max-w-xl">
-              LaunchForge Digital helps businesses build modern digital products that are fast, scalable, and designed to convert visitors into customers.
+              codeshef helps businesses build modern digital products that are fast, scalable, and designed to convert visitors into customers.
             </p>
           </motion.div>
         </div>

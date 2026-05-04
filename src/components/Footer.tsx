@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
           <div className="md:col-span-1">
             <Link to="/" className="font-display text-2xl font-bold">
-              Launch<span className="gradient-text">Forge</span>
+              code<span className="gradient-text">shef</span>
             </Link>
             <p className="mt-4 text-sm text-charcoal-foreground leading-relaxed">
               High-performance websites & digital solutions for modern businesses.
@@ -43,7 +43,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-16 pt-8 border-t border-charcoal/30 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-charcoal-foreground">
-          <p>© 2026 LaunchForge Digital. All rights reserved.</p>
+          <p>© 2026 codeshef. All rights reserved.</p>
           <div className="flex gap-6">
             <span className="hover:text-primary transition-colors cursor-pointer">Privacy Policy</span>
             <span className="hover:text-primary transition-colors cursor-pointer">Terms of Service</span>

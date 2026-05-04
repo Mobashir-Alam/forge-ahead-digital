@@ -49,9 +49,9 @@ const benefits = [
 ];
 
 const testimonials = [
-  { name: "Sarah Chen", role: "CEO, TechVista", text: "LaunchForge completely transformed our online presence. The design quality exceeded our expectations, and we saw a 200% increase in conversions within the first month.", stars: 5 },
+  { name: "Sarah Chen", role: "CEO, TechVista", text: "codeshef completely transformed our online presence. The design quality exceeded our expectations, and we saw a 200% increase in conversions within the first month.", stars: 5 },
   { name: "Marcus Johnson", role: "Founder, GrowthLab", text: "Their professionalism is unmatched. They delivered on time, communicated clearly throughout, and the final product was pixel-perfect.", stars: 5 },
-  { name: "Emily Rodriguez", role: "CMO, ScaleUp Inc", text: "Working with LaunchForge was seamless. They understood our vision immediately and built a website that truly represents our brand.", stars: 5 },
+  { name: "Emily Rodriguez", role: "CMO, ScaleUp Inc", text: "Working with codeshef was seamless. They understood our vision immediately and built a website that truly represents our brand.", stars: 5 },
 ];
 
 export default function Index() {
@@ -80,6 +80,9 @@ export default function Index() {
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
               We design and build fast, scalable, and conversion-focused websites that help businesses grow online.
+            </p>
+            <p className="mt-3 text-sm text-primary font-medium tracking-wide uppercase">
+              Powered by R AND R
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button variant="hero" size="xl" onClick={() => setOpen(true)}>
@@ -201,7 +204,7 @@ export default function Index() {
           >
             <span className="text-sm font-semibold text-primary tracking-widest uppercase mb-3 block">Why Us</span>
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-navy-foreground">
-              Why Businesses Choose LaunchForge
+              Why Businesses Choose codeshef
             </h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
