@@ -6,11 +6,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send } from "lucide-react";
 
 const initialMessages = [
-  { id: 1, sender: "LaunchForge", initials: "LF", text: "Hi John! Your design mockups are ready for review.", time: "10:30 AM", self: false },
+  { id: 1, sender: "codeshef", initials: "CS", text: "Hi John! Your design mockups are ready for review.", time: "10:30 AM", self: false },
   { id: 2, sender: "You", initials: "JD", text: "Great, I'll take a look this afternoon.", time: "10:45 AM", self: true },
-  { id: 3, sender: "LaunchForge", initials: "LF", text: "Sounds good! Let me know if you have any feedback.", time: "10:46 AM", self: false },
+  { id: 3, sender: "codeshef", initials: "CS", text: "Sounds good! Let me know if you have any feedback.", time: "10:46 AM", self: false },
   { id: 4, sender: "You", initials: "JD", text: "The homepage looks amazing! Can we adjust the hero section colors?", time: "2:15 PM", self: true },
-  { id: 5, sender: "LaunchForge", initials: "LF", text: "Absolutely, I'll update that today and send a revised version.", time: "2:20 PM", self: false },
+  { id: 5, sender: "codeshef", initials: "CS", text: "Absolutely, I'll update that today and send a revised version.", time: "2:20 PM", self: false },
 ];
 
 export default function Messages() {

@@ -43,7 +43,7 @@ export default function DashboardLayout() {
     <div className="flex flex-col h-full">
       <div className={cn("flex items-center h-16 px-4 border-b border-border/50", collapsed ? "justify-center" : "gap-2")}>
         <Link to="/" className="font-display text-lg font-bold tracking-tight text-foreground">
-          {collapsed ? <span className="gradient-text">L</span> : <>Launch<span className="gradient-text">Forge</span></>}
+          {collapsed ? <span className="gradient-text">C</span> : <>code<span className="gradient-text">shef</span></>}
         </Link>
       </div>
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">

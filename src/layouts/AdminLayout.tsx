@@ -41,7 +41,7 @@ export default function AdminLayout() {
     <div className="flex flex-col h-full">
       <div className={cn("flex items-center h-16 px-4 border-b border-border/50", collapsed ? "justify-center" : "gap-2")}>
         <Link to="/admin/dashboard" className="font-display text-lg font-bold tracking-tight text-foreground">
-          {collapsed ? <span className="gradient-text">A</span> : <>Launch<span className="gradient-text">Forge</span> <span className="text-xs font-normal text-muted-foreground">Admin</span></>}
+          {collapsed ? <span className="gradient-text">C</span> : <>code<span className="gradient-text">shef</span> <span className="text-xs font-normal text-muted-foreground">Admin</span></>}
         </Link>
       </div>
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
