@@ -23,7 +23,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 nav-bg">
       <div className="container-tight flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="font-display text-xl md:text-2xl font-bold tracking-tight text-foreground">
-          Launch<span className="gradient-text">Forge</span>
+          code<span className="gradient-text">shef</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">

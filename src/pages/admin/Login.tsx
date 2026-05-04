@@ -50,7 +50,7 @@ export default function AdminLogin() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="font-display text-2xl font-bold tracking-tight text-foreground">
-            Launch<span className="gradient-text">Forge</span>
+            code<span className="gradient-text">shef</span>
           </Link>
           <div className="flex items-center justify-center gap-2 mt-2">
             <ShieldCheck className="h-4 w-4 text-primary" />
@@ -66,7 +66,7 @@ export default function AdminLogin() {
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="admin@launchforge.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                <Input id="email" type="email" placeholder="admin@codeshef.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>

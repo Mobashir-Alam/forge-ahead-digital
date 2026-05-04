@@ -32,7 +32,7 @@ export default function Login() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="font-display text-2xl font-bold tracking-tight text-foreground">
-            Launch<span className="gradient-text">Forge</span>
+            code<span className="gradient-text">shef</span>
           </Link>
           <p className="text-muted-foreground mt-2">Client Portal</p>
         </div>
