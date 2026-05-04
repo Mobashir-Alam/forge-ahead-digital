@@ -81,6 +81,9 @@ export default function Index() {
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
               We design and build fast, scalable, and conversion-focused websites that help businesses grow online.
             </p>
+            <p className="mt-3 text-sm text-primary font-medium tracking-wide uppercase">
+              Powered by R AND R
+            </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button variant="hero" size="xl" onClick={() => setOpen(true)}>
                 Book a Free Consultation
